@@ -41,7 +41,7 @@ export const getAllBlogs = async (req, res) => {
 
 
         const page = req.query.page ? parseInt(req.query.page) : 1;
-        const limit = 4;
+        const limit = 5;
         const skip = (page - 1) * limit;
 
         const allBlogs = await Blogs.find(query).skip(skip).limit(limit);
@@ -87,7 +87,7 @@ export const getSingleBlog = async (req, res) => {
 
 export const updateBlog = async (req, res) => {
     const {id} = req.params;
-    const {title, author, content, category} = req.body;
+    const {title,content, category} = req.body;
 
     try {
         if(!id){
@@ -99,8 +99,7 @@ export const updateBlog = async (req, res) => {
         }
 
         const updateToBlog = await Blogs.findByIdAndUpdate(id, {
-             title,
-             author, 
+             title, 
              content,
              category
         });

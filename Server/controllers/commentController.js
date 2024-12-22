@@ -1,4 +1,5 @@
 import Comment from "../models/commenSchema.js";
+import mongoose from "mongoose";
 
 export const addComment = async (req, res) => {
         const {content, postId} = req.body;
@@ -27,6 +28,7 @@ export const getComments = async (req, res) => {
 
 export const updateComment = async (req, res) => {
     const {id} = req.params;
+   
     try {
         const {content} = req.body;
 
@@ -34,13 +36,15 @@ export const updateComment = async (req, res) => {
                     return res.status(400).send({message: "You must specify a Comment ID"});
                 }
         
-                if(!mongoose.Types.ObjectId.isValid(id)){
+        if(!mongoose.Types.ObjectId.isValid(id)){
                     return res.status(400).send({message: "Given ID is not in proper format"});
                 }
+                // console.log(id)
 
         const updateToComment = await Comment.findByIdAndUpdate(id,{
             content
         });
+        // console.log(updateToComment)
 
         if(!updateToComment){
             return res.status(404).send({message: "No Blog is found with that ID"});
